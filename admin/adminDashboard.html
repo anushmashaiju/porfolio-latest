@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Admin Dashboard</title>
+
+<style>
+
+body{
+font-family: "Poppins", Arial, sans-serif;
+background:#000;
+color:#fff;
+margin:0;
+padding:40px;
+}
+
+.container{
+max-width:1100px;
+margin:auto;
+background:#111;
+padding:40px;
+border-radius:10px;
+box-shadow:0 0 30px rgba(255,189,57,0.1);
+}
+
+h1{
+text-align:center;
+color:#ffbd39;
+margin-bottom:40px;
+font-size:32px;
+}
+
+h2{
+margin-top:40px;
+color:#fff;
+border-left:4px solid #ffbd39;
+padding-left:12px;
+}
+
+input, textarea{
+width:100%;
+padding:12px;
+margin-top:8px;
+margin-bottom:15px;
+border:1px solid #333;
+border-radius:6px;
+background:#1a1a1a;
+color:#fff;
+font-size:14px;
+transition:0.3s;
+}
+
+input::placeholder,
+textarea::placeholder{
+color:#777;
+}
+
+input:focus, textarea:focus{
+outline:none;
+border-color:#ffbd39;
+box-shadow:0 0 8px rgba(255,189,57,0.3);
+}
+
+textarea{
+height:120px;
+resize:none;
+}
+
+button{
+padding:10px 20px;
+border:none;
+background:#ffbd39;
+color:#000;
+border-radius:6px;
+cursor:pointer;
+font-weight:600;
+transition:0.3s;
+}
+
+button:hover{
+background:#ffd369;
+transform:translateY(-2px);
+}
+
+.delete-btn{
+background:#ff4d4d;
+color:white;
+}
+
+.delete-btn:hover{
+background:#ff1a1a;
+}
+
+.project-card{
+border:1px solid #222;
+padding:15px 20px;
+margin-bottom:12px;
+border-radius:6px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+background:#0d0d0d;
+transition:0.3s;
+}
+
+.project-card:hover{
+border-color:#ffbd39;
+box-shadow:0 0 10px rgba(255,189,57,0.2);
+}
+
+.project-card strong{
+font-size:16px;
+color:#fff;
+}
+
+hr{
+margin:40px 0;
+border:none;
+height:1px;
+background:#222;
+}
+
+input[type="file"]{
+padding:6px;
+background:#1a1a1a;
+border:none;
+color:#999;
+}
+
+@media (max-width:700px){
+
+.container{
+padding:25px;
+}
+
+.project-card{
+flex-direction:column;
+align-items:flex-start;
+gap:10px;
+}
+
+button{
+width:100%;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Admin Dashboard</h1>
+
+<h2>Add Project</h2>
+
+<input type="text" id="title" placeholder="Project Title">
+
+<label>Banner Image</label>
+<input type="file" id="image">
+
+<label>Screenshot Image</label>
+<input type="file" id="screenshot">
+
+<input type="text" id="github" placeholder="GitHub Link">
+<input type="text" id="livelink" placeholder="Live Demo Link">
+<input type="text" id="video" placeholder="Demo Video Link">
+
+<textarea id="description" placeholder="Project Description"></textarea>
+
+<textarea id="features" placeholder="Project Features"></textarea>
+
+<textarea id="technologies" placeholder="Technologies Used"></textarea>
+
+<button onclick="addProject()">Add Project</button>
+
+<hr>
+
+<h2>Projects</h2>
+
+<div id="project-list"></div>
+
+<hr>
+<h2>Add Mini Project</h2>
+
+<input type="text" id="miniTitle" placeholder="Project Title">
+
+<input type="file" id="miniImage">
+
+<input type="text" id="miniGithub" placeholder="Github Link">
+
+<input type="text" id="miniLive" placeholder="Live Link">
+
+<button onclick="addMiniProject()">Add Mini Project</button>
+
+<hr>
+
+<h2>Mini Projects</h2>
+
+<div id="mini-list"></div>
+<h2>Upload CV</h2>
+
+<input type="file" id="cvFile">
+
+<button onclick="uploadCV()">Upload CV</button>
+
+</div>
+
+<script src="admin.js"></script>
+
+</body>
+</html>
