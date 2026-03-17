@@ -7,7 +7,7 @@ const adminRoutes = require("./routes/adminRoutes")
 const cvRoutes = require("./routes/cvRoutes")
 const miniProjectRoutes = require("./routes/miniProjectRoutes")
 const contactRoutes = require("./routes/contactRoutes")
-const experienceRoutes = require("./routes/experience.js")
+const experienceRoutes = require("./routes/experience")
 const app = express()
 
 app.use(cors())
