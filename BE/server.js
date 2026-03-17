@@ -7,6 +7,7 @@ const adminRoutes = require("./routes/adminRoutes")
 const cvRoutes = require("./routes/cvRoutes")
 const miniProjectRoutes = require("./routes/miniProjectRoutes")
 const contactRoutes = require("./routes/contactRoutes")
+const experienceRoutes = require("./routes/experience.js")
 const app = express()
 
 app.use(cors())
@@ -27,6 +28,7 @@ app.use("/api/admin", adminRoutes)
 app.use("/api/cv", cvRoutes)
 app.use("/api/miniprojects", miniProjectRoutes)
 app.use("/api/contact", contactRoutes)
+app.use("/api/experience", experienceRoutes)
 
 app.listen(5000, () => {
   console.log("Server running on port 5000")

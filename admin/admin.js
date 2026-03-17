@@ -243,3 +243,26 @@ function editMiniProject(id) {
             miniEditId = id
         })
 }
+
+function addExperience() {
+
+    const role = document.getElementById("role").value
+    const company = document.getElementById("company").value
+    const year = document.getElementById("year").value
+    const certificate = document.getElementById("certificate").files[0]
+
+    const formData = new FormData()
+
+    formData.append("role", role)
+    formData.append("company", company)
+    formData.append("year", year)
+    formData.append("certificate", certificate)
+
+    fetch(`${BASE_URL}/api/experience`, {
+        method: "POST",
+        body: formData
+    })
+    .then(() => {
+        alert("Experience Added")
+    })
+}

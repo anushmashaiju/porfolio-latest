@@ -219,3 +219,61 @@ fetch(`${BASE_URL}/api/miniprojects`)
         document.getElementById("mini-count").innerText = data.length
     })
 
+// EXPERIENCE FETCH 
+
+const experienceContainer = document.getElementById("experience-container")
+
+if (experienceContainer) {
+
+    experienceContainer.innerHTML = `
+        <div style="text-align:center; padding:40px;">
+            <p>⚡ Loading experience...</p>
+        </div>
+    `
+
+    setTimeout(() => {
+        if (experienceContainer.innerHTML.includes("Loading")) {
+            experienceContainer.innerHTML = `
+                <div style="text-align:center; padding:40px;">
+                    <p>⏳ Server is waking up... please wait</p>
+                </div>
+            `
+        }
+    }, 5000)
+
+    fetch(`${BASE_URL}/api/experience`)
+        .then(res => res.json())
+        .then(data => {
+
+            experienceContainer.innerHTML = ""
+
+            data.forEach(exp => {
+
+                experienceContainer.innerHTML += `
+                <div class="col-md-6">
+                    <div class="project-card" style="cursor:pointer"
+                         onclick="openCertificate('${BASE_URL}/uploads/${exp.certificate}')">
+
+                        <h3>${exp.role}</h3>
+                        <p><strong>${exp.company}</strong></p>
+                        <p>${exp.year}</p>
+
+                        <p style="color:#ffbd39;">View Certificate ↗</p>
+
+                    </div>
+                </div>
+                `
+            })
+        })
+        .catch(() => {
+            experienceContainer.innerHTML = `
+                <p style="text-align:center;">❌ Failed to load experience</p>
+            `
+        })
+}
+
+
+// OPEN CERTIFICATE
+function openCertificate(url) {
+    window.open(url, "_blank")
+}
