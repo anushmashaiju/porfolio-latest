@@ -70,9 +70,9 @@ document.addEventListener("DOMContentLoaded", function () {
             <img src="${BASE_URL}/uploads/${project.image}" 
             style="width:100%;height:400px;object-fit:cover;margin:50px">
 
-            <h3 style="padding:15px; text-align:center;">
-                ${project.title} →
-            </h3>
+          <h3 class="project-title">
+    ${project.title} ↗
+</h3>
 
         </div>
     </a>

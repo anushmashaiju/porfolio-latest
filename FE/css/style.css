@@ -40,6 +40,9 @@
   -webkit-box-sizing: border-box;
   box-sizing: border-box; }
 
+html, body {
+    overflow-x: hidden;
+}
 html {
   font-family: sans-serif;
   line-height: 1.15;
@@ -2491,6 +2494,18 @@ input[type="submit"].btn-block,
 input[type="reset"].btn-block,
 input[type="button"].btn-block {
   width: 100%; }
+
+  .project-title {
+    padding: 15px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.project-title:hover {
+    color: #007bff;
+    transform: translateY(-3px);
+}
 
 .fade {
   -webkit-transition: opacity 0.15s linear;

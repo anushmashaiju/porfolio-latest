@@ -40,10 +40,7 @@
 
 
     <!-- HERO SECTION -->
-
-    <section id="hero-section" class="hero-wrap js-fullheight"
-        style="background-image:url(`${BASE_URL}/uploads/${project.image}`)"
-        data-stellar-background-ratio="0.5">
+<section id="hero-section" class="hero-wrap js-fullheight">
 
         <div class="overlay"></div>
 
@@ -257,8 +254,9 @@
                 } else {
                     document.getElementById("video-block").style.display = "none"
                 }
-                document.getElementById("hero-section").style.backgroundImage =
-                    `url(${BASE_URL}/uploads/" + project.image + ")`
+               
+                    document.getElementById("hero-section").style.backgroundImage =
+    `url(${BASE_URL}/uploads/${project.image})`
                 document.getElementById("project-screenshot").src =
                     `${BASE_URL}/uploads/` + project.screenshot
             })
