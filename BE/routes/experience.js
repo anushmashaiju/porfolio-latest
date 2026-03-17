@@ -1,6 +1,6 @@
 const express = require("express")
 const multer = require("multer")
-const Experience = require( "../models/experience.js")
+const Experience = require("../models/experience")
 
 const router = express.Router()
 
@@ -15,7 +15,6 @@ const upload = multer({ storage })
 
 // ADD EXPERIENCE
 router.post("/", upload.single("certificate"), async (req, res) => {
-
   const newExp = new Experience({
     role: req.body.role,
     company: req.body.company,
@@ -33,4 +32,4 @@ router.get("/", async (req, res) => {
   res.json(data)
 })
 
-export default router
+module.exports = router

@@ -7,4 +7,4 @@ const experienceSchema = new mongoose.Schema({
   certificate: String
 })
 
-export default mongoose.model("Experience", experienceSchema)
+module.exports = mongoose.model("Experience", experienceSchema)
