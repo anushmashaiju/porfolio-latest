@@ -1,6 +1,6 @@
-import express from "express"
-import multer from "multer"
-import Experience from "../models/experience.js"
+const express = require("express")
+const multer = require("multer")
+const Experience = require( "../models/experience.js")
 
 const router = express.Router()
 
