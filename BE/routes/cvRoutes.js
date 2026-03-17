@@ -3,48 +3,39 @@ const router = express.Router()
 const multer = require("multer")
 const CV = require("../models/CV")
 
+const BASE_URL = "https://porfolio-latest-1.onrender.com"
+
 const storage = multer.diskStorage({
-
-destination: function(req,file,cb){
-cb(null,"uploads/cv")
-},
-
-filename: function(req,file,cb){
-cb(null, Date.now()+"-"+file.originalname)
-}
-
+    destination: function (req, file, cb) {
+        cb(null, "uploads/cv")
+    },
+    filename: function (req, file, cb) {
+        cb(null, Date.now() + "-" + file.originalname)
+    }
 })
 
-const upload = multer({storage})
-
+const upload = multer({ storage })
 
 // UPLOAD CV
-router.post("/", upload.single("cv"), async(req,res)=>{
+router.post("/", upload.single("cv"), async (req, res) => {
 
-const fileUrl = "http://localhost:5000/uploads/cv/" + req.file.filename
+    const fileUrl = BASE_URL + "/uploads/cv/" + req.file.filename
 
-await CV.deleteMany()   // keep only one CV
+    await CV.deleteMany()
 
-const cv = new CV({
+    const cv = new CV({
+        url: fileUrl
+    })
 
-url:fileUrl
+    await cv.save()
 
+    res.json(cv)
 })
-
-await cv.save()
-
-res.json(cv)
-
-})
-
 
 // GET CV
-router.get("/", async(req,res)=>{
-
-const cv = await CV.findOne()
-
-res.json(cv)
-
+router.get("/", async (req, res) => {
+    const cv = await CV.findOne()
+    res.json(cv)
 })
 
 module.exports = router

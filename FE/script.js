@@ -62,22 +62,22 @@ document.addEventListener("DOMContentLoaded", function () {
             projectContainer.innerHTML = ""
 
             projects.forEach(project => {
-                projectContainer.innerHTML += `
-                <div class="col-md-6">
-                    <div class="project-card">
+        projectContainer.innerHTML += `
+<div class="col-md-6">
+    <a href="project.html?id=${project._id}" style="text-decoration:none; color:black;">
+        <div class="project-card" style="cursor:pointer">
 
-                        <img src="${BASE_URL}/uploads/${project.image}" 
-                        style="width:100%;height:400px;object-fit:cover;margin:50px">
+            <img src="${BASE_URL}/uploads/${project.image}" 
+            style="width:100%;height:400px;object-fit:cover;margin:50px">
 
-                        <h3 style="padding:15px; text-align:center;">
-                            <a href="project.html?id=${project._id}">
-                                ${project.title}
-                            </a>
-                        </h3>
+            <h3 style="padding:15px; text-align:center;">
+                ${project.title} →
+            </h3>
 
-                    </div>
-                </div>
-                `
+        </div>
+    </a>
+</div>
+`
             })
         })
         .catch(error => {

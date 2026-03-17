@@ -1,275 +1,245 @@
-function loadProjects(){
+const BASE_URL = "https://porfolio-latest-1.onrender.com"
 
-fetch("http://localhost:5000/api/projects")
-.then(res=>res.json())
-.then(data=>{
 
-const container = document.getElementById("project-list")
+//  LOAD PROJECTS 
+function loadProjects() {
 
-container.innerHTML=""
+    fetch(`${BASE_URL}/api/projects`)
+        .then(res => res.json())
+        .then(data => {
 
-data.forEach(p=>{
+            const container = document.getElementById("project-list")
+            container.innerHTML = ""
 
-container.innerHTML+=`
+            data.forEach(p => {
 
-<div class="project-card">
+                container.innerHTML += `
+                <div class="project-card">
 
-<div>
-<strong>${p.title}</strong>
-</div>
+                    <div>
+                        <strong>${p.title}</strong>
+                    </div>
 
-<div>
+                    <div>
+                        <button onclick="editProject('${p._id}')">Edit</button>
 
-<button onclick="editProject('${p._id}')">
-Edit
-</button>
+                        <button class="delete-btn" onclick="deleteProject('${p._id}')">
+                            Delete
+                        </button>
+                    </div>
 
-<button class="delete-btn" onclick="deleteProject('${p._id}')">
-Delete
-</button>
+                </div>
+                `
+            })
 
-</div>
-
-</div>
-
-`
-
-})
-
-})
-
+        })
 }
 
 loadProjects()
 
 
-
-function addProject(){
-
-const title = document.getElementById("title").value
-const image = document.getElementById("image").files[0]
-const screenshot = document.getElementById("screenshot").files[0]
-const github = document.getElementById("github").value
-const livelink = document.getElementById("livelink").value
-const video = document.getElementById("video").value
-const description = document.getElementById("description").value
-const features = document.getElementById("features").value
-const technologies = document.getElementById("technologies").value
-
-const formData = new FormData()
-
-formData.append("title", title)
-if(image){
-formData.append("image", image)
-}
-
-if(screenshot){
-formData.append("screenshot", screenshot)
-}
-formData.append("github", github)
-formData.append("livelink", livelink)
-formData.append("video", video)
-formData.append("description", description)
-formData.append("features", features)
-formData.append("technologies", technologies)
-
-let url = "http://localhost:5000/api/projects"
-let method = "POST"
-
-if(editId){
-url = `http://localhost:5000/api/projects/${editId}`
-method = "PUT"
-}
-
-fetch(url,{
-method:method,
-body:formData
-})
-.then(res=>res.json())
-.then(()=>{
-
-alert(editId ? "Project Updated" : "Project Added")
-
-editId = null
-
-loadProjects()
-
-})
-
-}
-
-function deleteProject(id){
-
-fetch(`http://localhost:5000/api/projects/${id}`,{
-
-method:"DELETE"
-
-})
-.then(()=>{
-
-loadProjects()
-
-})
-
-}
-
-
-
-function uploadCV(){
-
-const file = document.getElementById("cvFile").files[0]
-
-const formData = new FormData()
-
-formData.append("cv",file)
-
-fetch("http://localhost:5000/api/cv",{
-
-method:"POST",
-
-body:formData
-
-})
-.then(res=>res.json())
-.then(()=>{
-
-alert("CV Uploaded")
-
-})
-
-}
-
+//  ADD / UPDATE PROJECT 
 let editId = null
 
-function editProject(id){
+function addProject() {
 
-fetch(`http://localhost:5000/api/projects/${id}`)
-.then(res=>res.json())
-.then(data=>{
+    const title = document.getElementById("title").value
+    const image = document.getElementById("image").files[0]
+    const screenshot = document.getElementById("screenshot").files[0]
+    const github = document.getElementById("github").value
+    const livelink = document.getElementById("livelink").value
+    const video = document.getElementById("video").value
+    const description = document.getElementById("description").value
+    const features = document.getElementById("features").value
+    const technologies = document.getElementById("technologies").value
 
-document.getElementById("title").value = data.title
-document.getElementById("github").value = data.github
-document.getElementById("video").value = data.video
-document.getElementById("livelink").value = data.livelink
-document.getElementById("description").value = data.description
-document.getElementById("features").value = data.features
-document.getElementById("technologies").value = data.technologies
+    const formData = new FormData()
 
-editId = id
+    formData.append("title", title)
 
-})
+    if (image) formData.append("image", image)
+    if (screenshot) formData.append("screenshot", screenshot)
 
+    formData.append("github", github)
+    formData.append("livelink", livelink)
+    formData.append("video", video)
+    formData.append("description", description)
+    formData.append("features", features)
+    formData.append("technologies", technologies)
+
+    let url = `${BASE_URL}/api/projects`
+    let method = "POST"
+
+    if (editId) {
+        url = `${BASE_URL}/api/projects/${editId}`
+        method = "PUT"
+    }
+
+    fetch(url, {
+        method: method,
+        body: formData
+    })
+        .then(res => res.json())
+        .then(() => {
+
+            alert(editId ? "Project Updated" : "Project Added")
+
+            editId = null
+
+            loadProjects()
+        })
 }
 
-function loadMiniProjects(){
 
-fetch("http://localhost:5000/api/miniprojects")
-.then(res=>res.json())
-.then(data=>{
+//  DELETE PROJECT 
+function deleteProject(id) {
 
-const container = document.getElementById("mini-list")
-
-container.innerHTML=""
-
-data.forEach(p=>{
-
-container.innerHTML+=`
-
-<div class="project-card">
-
-<div>
-<strong>${p.title}</strong>
-</div>
-
-<div>
-
-<button onclick="editMiniProject('${p._id}')">
-Edit
-</button>
-
-<button class="delete-btn" onclick="deleteMini('${p._id}')">
-Delete
-</button>
-
-</div>
-
-</div>
-
-`
-
-})
-
-})
-
+    fetch(`${BASE_URL}/api/projects/${id}`, {
+        method: "DELETE"
+    })
+        .then(() => {
+            loadProjects()
+        })
 }
 
-loadMiniProjects()
 
-function addMiniProject(){
+//  EDIT PROJECT 
+function editProject(id) {
 
-const title = document.getElementById("miniTitle").value
-const image = document.getElementById("miniImage").files[0]
-const github = document.getElementById("miniGithub").value
-const livelink = document.getElementById("miniLive").value
+    fetch(`${BASE_URL}/api/projects/${id}`)
+        .then(res => res.json())
+        .then(data => {
 
-const formData = new FormData()
+            document.getElementById("title").value = data.title
+            document.getElementById("github").value = data.github
+            document.getElementById("video").value = data.video
+            document.getElementById("livelink").value = data.livelink
+            document.getElementById("description").value = data.description
+            document.getElementById("features").value = data.features
+            document.getElementById("technologies").value = data.technologies
 
-formData.append("title", title)
-formData.append("image", image)
-formData.append("github", github)
-formData.append("livelink", livelink)
-
-let url = "http://localhost:5000/api/miniprojects"
-let method = "POST"
-
-if(miniEditId){
-url = `http://localhost:5000/api/miniprojects/${miniEditId}`
-method = "PUT"
+            editId = id
+        })
 }
 
-fetch(url,{
-method:method,
-body:formData
-})
-.then(()=>{
 
-alert(miniEditId ? "Mini Project Updated" : "Mini Project Added")
+//  UPLOAD CV 
+function uploadCV() {
 
-miniEditId = null
+    const file = document.getElementById("cvFile").files[0]
 
-loadMiniProjects()
+    const formData = new FormData()
+    formData.append("cv", file)
 
-})
-
+    fetch(`${BASE_URL}/api/cv`, {
+        method: "POST",
+        body: formData
+    })
+        .then(res => res.json())
+        .then(() => {
+            alert("CV Uploaded")
+        })
 }
 
-function deleteMini(id){
 
-fetch(`http://localhost:5000/api/miniprojects/${id}`,{
-method:"DELETE"
-})
-.then(()=>{
-
-loadMiniProjects()
-
-})
-
-}
-
+// ================== MINI PROJECTS ==================
 let miniEditId = null
 
-function editMiniProject(id){
 
-fetch(`http://localhost:5000/api/miniprojects/${id}`)
-.then(res=>res.json())
-.then(data=>{
+function loadMiniProjects() {
 
-document.getElementById("miniTitle").value = data.title
-document.getElementById("miniGithub").value = data.github
-document.getElementById("miniLive").value = data.livelink
+    fetch(`${BASE_URL}/api/miniprojects`)
+        .then(res => res.json())
+        .then(data => {
 
-miniEditId = id
+            const container = document.getElementById("mini-list")
+            container.innerHTML = ""
 
-})
+            data.forEach(p => {
 
+                container.innerHTML += `
+                <div class="project-card">
+
+                    <div>
+                        <strong>${p.title}</strong>
+                    </div>
+
+                    <div>
+                        <button onclick="editMiniProject('${p._id}')">Edit</button>
+
+                        <button class="delete-btn" onclick="deleteMini('${p._id}')">
+                            Delete
+                        </button>
+                    </div>
+
+                </div>
+                `
+            })
+        })
+}
+
+loadMiniProjects()
+
+
+function addMiniProject() {
+
+    const title = document.getElementById("miniTitle").value
+    const image = document.getElementById("miniImage").files[0]
+    const github = document.getElementById("miniGithub").value
+    const livelink = document.getElementById("miniLive").value
+
+    const formData = new FormData()
+
+    formData.append("title", title)
+    if (image) formData.append("image", image)
+
+    formData.append("github", github)
+    formData.append("livelink", livelink)
+
+    let url = `${BASE_URL}/api/miniprojects`
+    let method = "POST"
+
+    if (miniEditId) {
+        url = `${BASE_URL}/api/miniprojects/${miniEditId}`
+        method = "PUT"
+    }
+
+    fetch(url, {
+        method: method,
+        body: formData
+    })
+        .then(() => {
+
+            alert(miniEditId ? "Mini Project Updated" : "Mini Project Added")
+
+            miniEditId = null
+
+            loadMiniProjects()
+        })
+}
+
+
+function deleteMini(id) {
+
+    fetch(`${BASE_URL}/api/miniprojects/${id}`, {
+        method: "DELETE"
+    })
+        .then(() => {
+            loadMiniProjects()
+        })
+}
+
+
+function editMiniProject(id) {
+
+    fetch(`${BASE_URL}/api/miniprojects/${id}`)
+        .then(res => res.json())
+        .then(data => {
+
+            document.getElementById("miniTitle").value = data.title
+            document.getElementById("miniGithub").value = data.github
+            document.getElementById("miniLive").value = data.livelink
+
+            miniEditId = id
+        })
 }
