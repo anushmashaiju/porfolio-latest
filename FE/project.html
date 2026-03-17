@@ -70,7 +70,9 @@
 
     </section>
 
-
+<div id="project-loading" style="text-align:center; padding:40px;">
+    <p>⚡ Loading project...</p>
+</div>
     <!-- PROJECT DETAILS -->
 
     <section class="ftco-section">
@@ -200,75 +202,77 @@
 
     <!-- DYNAMIC PROJECT SCRIPT -->
 
-    <script>
-          const BASE_URL = "https://porfolio-latest-1.onrender.com"
-        const params = new URLSearchParams(window.location.search)
+   <script>
+const BASE_URL = "https://porfolio-latest-1.onrender.com"
 
-        const id = params.get("id")
+const params = new URLSearchParams(window.location.search)
+const id = params.get("id")
 
-        console.log("Project ID:", id)
+const loadingDiv = document.getElementById("project-loading")
 
-        fetch(`${BASE_URL}/api/projects/${id}`)
+// Show "server waking" after 5 sec
+setTimeout(() => {
+    if (loadingDiv.innerHTML.includes("Loading")) {
+        loadingDiv.innerHTML = `
+            <p>⏳ Server is waking up... please wait a few seconds</p>
+        `
+    }
+}, 5000)
 
-            .then(res => res.json())
+// 🔥 FETCH PROJECT
+fetch(`${BASE_URL}/api/projects/${id}`)
+    .then(res => res.json())
+    .then(project => {
 
-            .then(project => {
+        // ✅ Hide loading
+        loadingDiv.style.display = "none"
 
-                console.log(project)
+        // TEXT DATA
+        document.getElementById("project-title").innerText = project.title
+        document.getElementById("project-heading").innerText = project.title
+        document.getElementById("project-description").innerText = project.description
+        document.getElementById("project-features").innerText = project.features
+        document.getElementById("project-technologies").innerText = project.technologies
 
-                document.getElementById("project-title").innerText = project.title
+        // 🔗 GitHub
+        if (project.github) {
+            document.getElementById("github-link").href = project.github
+            document.getElementById("github-link").innerText = project.github
+        } else {
+            document.getElementById("github-block").style.display = "none"
+        }
 
-                document.getElementById("project-heading").innerText =
-                    project.title
+        // 🌐 Live Demo
+        if (project.livelink) {
+            document.getElementById("live-link").href = project.livelink
+            document.getElementById("live-link").innerText = project.livelink
+        } else {
+            document.getElementById("live-block").style.display = "none"
+        }
 
-                document.getElementById("project-description").innerText =
-                    project.description
+        // 🎥 Video
+        if (project.video) {
+            document.getElementById("video-link").href = project.video
+            document.getElementById("video-link").innerText = project.video
+        } else {
+            document.getElementById("video-block").style.display = "none"
+        }
 
-                document.getElementById("project-features").innerText =
-                    project.features
+        // 🖼️ HERO IMAGE
+        document.getElementById("hero-section").style.backgroundImage =
+            `url(${BASE_URL}/uploads/${project.image})`
 
-                document.getElementById("project-technologies").innerText =
-                    project.technologies
+        // 🖼️ SCREENSHOT
+        document.getElementById("project-screenshot").src =
+            `${BASE_URL}/uploads/${project.screenshot}`
 
+    })
+    .catch(error => {
 
+        console.error("Error loading project:", error)
 
-                // GitHub
-                if (project.github) {
-                    document.getElementById("github-link").href = project.github
-                    document.getElementById("github-link").innerText = project.github
-                } else {
-                    document.getElementById("github-block").style.display = "none"
-                }
-
-                // Live Demo
-                if (project.livelink) {
-                    document.getElementById("live-link").href = project.livelink
-                    document.getElementById("live-link").innerText = project.livelink
-                } else {
-                    document.getElementById("live-block").style.display = "none"
-                }
-                // Video
-                if (project.video) {
-                    document.getElementById("video-link").href = project.video
-                    document.getElementById("video-link").innerText = project.video
-                } else {
-                    document.getElementById("video-block").style.display = "none"
-                }
-               
-                    document.getElementById("hero-section").style.backgroundImage =
-    `url(${BASE_URL}/uploads/${project.image})`
-                document.getElementById("project-screenshot").src =
-                    `${BASE_URL}/uploads/` + project.screenshot
-            })
-
-            .catch(error => {
-
-                console.error("Error loading project:", error)
-
-            })
-    </script>
-
-
-</body>
-
-</html>
+        loadingDiv.innerHTML = `
+            <p>❌ Failed to load project. Please try again.</p>
+        `
+    })
+</script>

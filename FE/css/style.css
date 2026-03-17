@@ -2506,7 +2506,10 @@ input[type="button"].btn-block {
     color: #007bff;
     transform: translateY(-3px);
 }
-
+#project-loading {
+    font-size: 18px;
+    font-weight: 500;
+}
 .fade {
   -webkit-transition: opacity 0.15s linear;
   -o-transition: opacity 0.15s linear;
