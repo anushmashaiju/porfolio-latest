@@ -11,117 +11,266 @@
 
     <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet">
 
+    <link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="css/animate.css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="css/magnific-popup.css">
+    <link rel="stylesheet" href="css/aos.css">
+    <link rel="stylesheet" href="css/ionicons.min.css">
+    <link rel="stylesheet" href="css/flaticon.css">
+    <link rel="stylesheet" href="css/icomoon.css">
     <link rel="stylesheet" href="css/style.css">
+
 </head>
 
 <body>
 
     <!-- NAVBAR -->
-    <nav class="navbar navbar-expand-lg navbar-dark">
+
+    <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar ftco-navbar-light">
+
         <div class="container">
+
             <a class="navbar-brand" href="index.html">Anushma</a>
+
         </div>
+
     </nav>
 
+
     <!-- HERO SECTION -->
-    <section id="hero-section" class="hero-wrap js-fullheight">
+
+    <section id="hero-section" class="hero-wrap js-fullheight"
+        style="background-image:url(`${BASE_URL}/uploads/${project.image}`)"
+        data-stellar-background-ratio="0.5">
+
         <div class="overlay"></div>
 
         <div class="container">
-            <div class="text-center">
-                <h1 id="project-title"></h1>
+
+            <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-center">
+
+                <div class="col-md-12 ftco-animate pb-5 mb-3 text-center">
+
+                    <h1 id="project-title" class="mb-3 bread"></h1>
+
+                    <p class="breadcrumbs">
+
+                        <span class="mr-2">
+                            <a href="index.html">
+                                Home <i class="ion-ios-arrow-forward"></i>
+                            </a>
+                        </span>
+
+                    </p>
+
+                </div>
+
             </div>
+
         </div>
+
     </section>
+
 
     <!-- PROJECT DETAILS -->
-    <section>
+
+    <section class="ftco-section">
+
         <div class="container">
 
-            <h2 id="project-heading"></h2>
-            <p id="project-description"></p>
+            <div class="row">
 
-            <strong>Features:</strong>
-            <p id="project-features"></p>
+                <div class="col-lg-8 ftco-animate">
 
-            <strong>Technologies:</strong>
-            <p id="project-technologies"></p>
+                    <h2 id="project-heading" class="mb-3"></h2>
 
-            <h3>Screenshot</h3>
-            <img id="project-screenshot" width="100%">
+                    <p id="project-description"></p>
 
-            <h3>Links</h3>
+                    <br>
 
-            <div id="github-block">
-                <a id="github-link" target="_blank"></a>
+                    <strong>🔍 Features:</strong>
+
+                    <p id="project-features"></p>
+
+                    <br>
+
+                    <strong>💻 Technologies Used:</strong>
+
+                    <p id="project-technologies"></p>
+
+                    <br>
+                    <h3>Project Screenshot</h3>
+
+                    <img id="project-screenshot" class="img-fluid" style="margin-top:20px;">
+
+</div>
+                    <!-- SIDEBAR -->
+
+                    <div class="col-lg-4 sidebar ftco-animate">
+
+                        <div class="sidebar-box ftco-animate">
+
+                            <h3 class="heading-sidebar">Links</h3>
+
+
+                            <div id="github-block" class="block-21 mb-4 d-flex">
+
+                                <div class="text">
+                                    <h3 class="heading">GitHub Repository</h3>
+
+                                    <div>
+                                        <a id="github-link" target="_blank"></a>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <div id="live-block" class="block-21 mb-4 d-flex">
+
+                                <div class="text">
+
+                                    <h3 class="heading">Live Demo</h3>
+
+                                    <div>
+                                        <a id="live-link" target="_blank"></a>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <div id="video-block" class="block-21 mb-4 d-flex">
+
+                                <div class="text">
+
+                                    <h3 class="heading">Demo Video</h3>
+
+                                    <div>
+                                        <a id="video-link" target="_blank"></a>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
             </div>
 
-            <div id="live-block">
-                <a id="live-link" target="_blank"></a>
-            </div>
-
-            <div id="video-block">
-                <a id="video-link" target="_blank"></a>
-            </div>
-
-        </div>
     </section>
 
-    <!-- SCRIPT -->
+
+    <!-- LOADER -->
+
+    <div id="ftco-loader" class="show fullscreen">
+
+        <svg class="circular" width="48px" height="48px">
+
+            <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
+
+            <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
+                stroke="#F96D00" />
+
+        </svg>
+
+    </div>
+
+
+
+    <!-- SCRIPTS -->
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-migrate-3.0.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.easing.1.3.js"></script>
+    <script src="js/jquery.waypoints.min.js"></script>
+    <script src="js/jquery.stellar.min.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/jquery.magnific-popup.min.js"></script>
+    <script src="js/aos.js"></script>
+    <script src="js/jquery.animateNumber.min.js"></script>
+    <script src="js/scrollax.min.js"></script>
+
+    <script src="js/main.js"></script>
+
+
+
+    <!-- DYNAMIC PROJECT SCRIPT -->
+
     <script>
-
-        const BASE_URL = "https://porfolio-latest-1.onrender.com"
-
+          const BASE_URL = "https://porfolio-latest-1.onrender.com"
         const params = new URLSearchParams(window.location.search)
+
         const id = params.get("id")
 
+        console.log("Project ID:", id)
+
         fetch(`${BASE_URL}/api/projects/${id}`)
+
             .then(res => res.json())
+
             .then(project => {
 
+                console.log(project)
+
                 document.getElementById("project-title").innerText = project.title
-                document.getElementById("project-heading").innerText = project.title
-                document.getElementById("project-description").innerText = project.description
-                document.getElementById("project-features").innerText = project.features
-                document.getElementById("project-technologies").innerText = project.technologies
+
+                document.getElementById("project-heading").innerText =
+                    project.title
+
+                document.getElementById("project-description").innerText =
+                    project.description
+
+                document.getElementById("project-features").innerText =
+                    project.features
+
+                document.getElementById("project-technologies").innerText =
+                    project.technologies
+
+
 
                 // GitHub
                 if (project.github) {
                     document.getElementById("github-link").href = project.github
-                    document.getElementById("github-link").innerText = "View GitHub"
+                    document.getElementById("github-link").innerText = project.github
                 } else {
                     document.getElementById("github-block").style.display = "none"
                 }
 
-                // Live
+                // Live Demo
                 if (project.livelink) {
                     document.getElementById("live-link").href = project.livelink
-                    document.getElementById("live-link").innerText = "View Live"
+                    document.getElementById("live-link").innerText = project.livelink
                 } else {
                     document.getElementById("live-block").style.display = "none"
                 }
-
                 // Video
                 if (project.video) {
                     document.getElementById("video-link").href = project.video
-                    document.getElementById("video-link").innerText = "Watch Video"
+                    document.getElementById("video-link").innerText = project.video
                 } else {
                     document.getElementById("video-block").style.display = "none"
                 }
-
-                // Images (FIXED)
                 document.getElementById("hero-section").style.backgroundImage =
-                    `url(${BASE_URL}/uploads/${project.image})`
-
+                    `url(${BASE_URL}/uploads/" + project.image + ")`
                 document.getElementById("project-screenshot").src =
-                    `${BASE_URL}/uploads/${project.screenshot}`
-
-            })
-            .catch(err => {
-                console.error("Error:", err)
+                    `${BASE_URL}/uploads/` + project.screenshot
             })
 
+            .catch(error => {
+
+                console.error("Error loading project:", error)
+
+            })
     </script>
 
+
 </body>
+
 </html>
