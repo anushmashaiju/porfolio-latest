@@ -1,3 +1,5 @@
+const BASE_URL = "https://porfolio-latest-1.onrender.com"
+
 function showToast(message, type = "success") {
 
     let color = "#28a745"
@@ -15,110 +17,87 @@ function showToast(message, type = "success") {
             background: color
         }
     }).showToast()
-
 }
 
 document.addEventListener("DOMContentLoaded", function () {
 
     // CV FETCH
-
-    fetch("http://localhost:5000/api/cv")
+    fetch(`${BASE_URL}/api/cv`)
         .then(res => res.json())
         .then(data => {
-
             if (data && data.url) {
                 document.getElementById("cv-download").href = data.url
             }
-
         })
         .catch(error => console.log("CV Error:", error))
 
 
     // PROJECTS FETCH
-
-    fetch("http://localhost:5000/api/projects")
+    fetch(`${BASE_URL}/api/projects`)
         .then(res => res.json())
         .then(projects => {
 
             const container = document.getElementById("projects-container")
-
             container.innerHTML = ""
 
             projects.forEach(project => {
 
                 container.innerHTML += `
-
 <div class="col-md-6">
+    <div class="project-card">
 
-<div class="project-card">
+        <img src="${BASE_URL}/uploads/${project.image}" 
+        style="width:100%;height:400px;object-fit:cover;margin:50px">
 
-<img src="http://localhost:5000/uploads/${project.image}" 
-style="width:100%;height:400px;object-fit:cover;margin:50px">
+        <h3 style="padding:15px; text-align:center;">
+            <a href="project.html?id=${project._id}">
+                ${project.title}
+            </a>
+        </h3>
 
-<h3 style="padding:15px; text-align:center;">
-<a href="project.html?id=${project._id}">
-${project.title}
-</a>
-</h3>
-
+    </div>
 </div>
-
-</div>
-
 `
-
             })
-
         })
         .catch(error => console.log("Projects Error:", error))
 
 
     // MINI PROJECTS FETCH
-
-    fetch("http://localhost:5000/api/miniprojects")
+    fetch(`${BASE_URL}/api/miniprojects`)
         .then(res => res.json())
         .then(projects => {
 
             const container = document.getElementById("mini-project-container")
-
             container.innerHTML = ""
 
             projects.forEach(project => {
 
                 container.innerHTML += `
-
 <div class="col-md-6">
+    <div class="blog-entry">
 
-<div class="blog-entry">
+        <a href="${project.livelink}" class="block-20"
+        style="background-image: url('${BASE_URL}/uploads/${project.image}');">
+        </a>
 
-<a href="${project.livelink}" class="block-20"
-style="background-image: url('http://localhost:5000/uploads/${project.image}');">
-</a>
+        <div class="text mt-3 mb-3 float-right d-block">
+            <h3 class="heading">
+                <a href="${project.github}">
+                    ${project.title}
+                </a>
+            </h3>
+        </div>
 
-<div class="text mt-3 mb-3 float-right d-block">
-
-<h3 class="heading">
-<a href="${project.github}">
-${project.title}
-</a>
-</h3>
-
+    </div>
 </div>
-
-</div>
-
-</div>
-
 `
-
             })
-
         })
         .catch(error => console.log("Mini Projects Error:", error))
 
 
     // CONTACT FORM
-
     const contactForm = document.getElementById("contact-form")
 
     if (contactForm) {
@@ -134,9 +113,7 @@ ${project.title}
 
             let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
-
             // VALIDATION
-
             if (name === "") {
                 showToast("Name required", "error")
                 return
@@ -157,19 +134,10 @@ ${project.title}
                 return
             }
 
-
-            // SEND DATA
-
-            const formData = {
-                name,
-                email,
-                subject,
-                message
-            }
+            const formData = { name, email, subject, message }
 
             try {
-
-                const res = await fetch("http://localhost:5000/api/contact", {
+                const res = await fetch(`${BASE_URL}/api/contact`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
@@ -180,40 +148,27 @@ ${project.title}
                 const data = await res.json()
 
                 showToast(data.message, "success")
-
                 contactForm.reset()
 
             } catch (error) {
-
                 console.log("Contact Error:", error)
-
                 showToast("Something went wrong. Please try again.", "error")
-
             }
-
         })
-
     }
 })
 
-// COUNTER SECTION DYNAMIC DATA
 
-// Projects count
-fetch("http://localhost:5000/api/projects")
+// COUNTER SECTION
+
+fetch(`${BASE_URL}/api/projects`)
 .then(res => res.json())
 .then(data => {
-
-const count = data.length
-document.getElementById("project-count").innerText = count
-
+    document.getElementById("project-count").innerText = data.length
 })
 
-// Mini projects count
-fetch("http://localhost:5000/api/miniprojects")
+fetch(`${BASE_URL}/api/miniprojects`)
 .then(res => res.json())
 .then(data => {
-
-const count = data.length
-document.getElementById("mini-count").innerText = count
-
+    document.getElementById("mini-count").innerText = data.length
 })
