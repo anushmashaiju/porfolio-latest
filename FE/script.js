@@ -1,7 +1,8 @@
+
 const BASE_URL = "https://porfolio-latest-1.onrender.com"
 
+// TOAST FUNCTION
 function showToast(message, type = "success") {
-
     let color = "#28a745"
 
     if (type === "error") {
@@ -21,7 +22,7 @@ function showToast(message, type = "success") {
 
 document.addEventListener("DOMContentLoaded", function () {
 
-    // CV FETCH
+    //  CV FETCH 
     fetch(`${BASE_URL}/api/cv`)
         .then(res => res.json())
         .then(data => {
@@ -32,72 +33,113 @@ document.addEventListener("DOMContentLoaded", function () {
         .catch(error => console.log("CV Error:", error))
 
 
-    // PROJECTS FETCH
+    //  PROJECTS FETCH 
+
+    const projectContainer = document.getElementById("projects-container")
+
+    // Show loading first
+    projectContainer.innerHTML = `
+        <div style="text-align:center; padding:40px;">
+            <p>⚡ Loading projects...</p>
+        </div>
+    `
+
+    // Show "server waking" after 5 sec
+    setTimeout(() => {
+        if (projectContainer.innerHTML.includes("Loading")) {
+            projectContainer.innerHTML = `
+                <div style="text-align:center; padding:40px;">
+                    <p>⏳ Server is waking up... please wait a few seconds</p>
+                </div>
+            `
+        }
+    }, 5000)
+
     fetch(`${BASE_URL}/api/projects`)
         .then(res => res.json())
         .then(projects => {
 
-            const container = document.getElementById("projects-container")
-            container.innerHTML = ""
+            projectContainer.innerHTML = ""
 
             projects.forEach(project => {
+                projectContainer.innerHTML += `
+                <div class="col-md-6">
+                    <div class="project-card">
 
-                container.innerHTML += `
-<div class="col-md-6">
-    <div class="project-card">
+                        <img src="${BASE_URL}/uploads/${project.image}" 
+                        style="width:100%;height:400px;object-fit:cover;margin:50px">
 
-        <img src="${BASE_URL}/uploads/${project.image}" 
-        style="width:100%;height:400px;object-fit:cover;margin:50px">
+                        <h3 style="padding:15px; text-align:center;">
+                            <a href="project.html?id=${project._id}">
+                                ${project.title}
+                            </a>
+                        </h3>
 
-        <h3 style="padding:15px; text-align:center;">
-            <a href="project.html?id=${project._id}">
-                ${project.title}
-            </a>
-        </h3>
-
-    </div>
-</div>
-`
+                    </div>
+                </div>
+                `
             })
         })
-        .catch(error => console.log("Projects Error:", error))
+        .catch(error => {
+            console.log("Projects Error:", error)
+            projectContainer.innerHTML = `
+                <div style="text-align:center; padding:40px;">
+                    <p>❌ Failed to load projects. Please try again.</p>
+                </div>
+            `
+        })
 
 
-    // MINI PROJECTS FETCH
+    //  MINI PROJECTS FETCH 
+
+    const miniContainer = document.getElementById("mini-project-container")
+
+    miniContainer.innerHTML = `
+        <div style="text-align:center; padding:40px;">
+            <p>⚡ Loading mini projects...</p>
+        </div>
+    `
+
     fetch(`${BASE_URL}/api/miniprojects`)
         .then(res => res.json())
         .then(projects => {
 
-            const container = document.getElementById("mini-project-container")
-            container.innerHTML = ""
+            miniContainer.innerHTML = ""
 
             projects.forEach(project => {
+                miniContainer.innerHTML += `
+                <div class="col-md-6">
+                    <div class="blog-entry">
 
-                container.innerHTML += `
-<div class="col-md-6">
-    <div class="blog-entry">
+                        <a href="${project.livelink}" class="block-20"
+                        style="background-image: url('${BASE_URL}/uploads/${project.image}')">
+                        </a>
 
-        <a href="${project.livelink}" class="block-20"
-        style="background-image: url('${BASE_URL}/uploads/${project.image}');">
-        </a>
+                        <div class="text mt-3 mb-3 float-right d-block">
+                            <h3 class="heading">
+                                <a href="${project.github}">
+                                    ${project.title}
+                                </a>
+                            </h3>
+                        </div>
 
-        <div class="text mt-3 mb-3 float-right d-block">
-            <h3 class="heading">
-                <a href="${project.github}">
-                    ${project.title}
-                </a>
-            </h3>
-        </div>
-
-    </div>
-</div>
-`
+                    </div>
+                </div>
+                `
             })
         })
-        .catch(error => console.log("Mini Projects Error:", error))
+        .catch(error => {
+            console.log("Mini Projects Error:", error)
+            miniContainer.innerHTML = `
+                <div style="text-align:center; padding:40px;">
+                    <p>❌ Failed to load mini projects.</p>
+                </div>
+            `
+        })
 
 
-    // CONTACT FORM
+    //  CONTACT FORM 
+
     const contactForm = document.getElementById("contact-form")
 
     if (contactForm) {
@@ -154,21 +196,26 @@ document.addEventListener("DOMContentLoaded", function () {
                 console.log("Contact Error:", error)
                 showToast("Something went wrong. Please try again.", "error")
             }
+
         })
     }
+
 })
 
 
-// COUNTER SECTION
+//  COUNTER SECTION 
 
+// Projects count
 fetch(`${BASE_URL}/api/projects`)
-.then(res => res.json())
-.then(data => {
-    document.getElementById("project-count").innerText = data.length
-})
+    .then(res => res.json())
+    .then(data => {
+        document.getElementById("project-count").innerText = data.length
+    })
 
+// Mini projects count
 fetch(`${BASE_URL}/api/miniprojects`)
-.then(res => res.json())
-.then(data => {
-    document.getElementById("mini-count").innerText = data.length
-})
+    .then(res => res.json())
+    .then(data => {
+        document.getElementById("mini-count").innerText = data.length
+    })
+
