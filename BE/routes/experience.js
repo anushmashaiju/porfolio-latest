@@ -27,14 +27,19 @@ const upload = multer({ storage })
 // ADD EXPERIENCE
 router.post("/", upload.single("certificate"), async (req, res) => {
 
+  if (!req.file) {
+    return res.status(400).json({ message: "Certificate file required" })
+  }
+
   const newExp = new Experience({
     role: req.body.role,
     company: req.body.company,
     year: req.body.year,
-    certificate: req.file.path   // ✅ Cloudinary URL
+    certificate: req.file.path
   })
 
   await newExp.save()
+
   res.json({ message: "Experience added" })
 })
 

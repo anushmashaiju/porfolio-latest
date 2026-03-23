@@ -259,10 +259,15 @@ function addExperience() {
     formData.append("certificate", certificate)
 
     fetch(`${BASE_URL}/api/experience`, {
-        method: "POST",
-        body: formData
-    })
-    .then(() => {
-        alert("Experience Added")
-    })
+    method: "POST",
+    body: formData
+})
+.then(res => res.json())
+.then(data => {
+    alert(data.message || "Experience Added")
+})
+.catch(err => {
+    console.error("Error:", err)
+    alert("Failed to add experience")
+})
 }
