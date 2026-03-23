@@ -252,7 +252,7 @@ if (experienceContainer) {
                 experienceContainer.innerHTML += `
                 <div class="col-md-6">
                     <div class="project-card" style="cursor:pointer"
-                         onclick="openCertificate('${BASE_URL}/uploads/${exp.certificate}')">
+                         onclick="openCertificate('${exp.certificate}')">
 
                         <h3>${exp.role}</h3>
                         <p><strong>${exp.company}</strong></p>

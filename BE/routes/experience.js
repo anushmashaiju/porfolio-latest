@@ -1,13 +1,24 @@
 const express = require("express")
+const router = express.Router()
 const multer = require("multer")
 const Experience = require("../models/experience")
 
-const router = express.Router()
+const cloudinary = require("cloudinary").v2
+const { CloudinaryStorage } = require("multer-storage-cloudinary")
 
-const storage = multer.diskStorage({
-  destination: "uploads/",
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + "-" + file.originalname)
+// CONFIG
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.CLOUD_API_KEY,
+  api_secret: process.env.CLOUD_API_SECRET
+})
+
+// STORAGE
+const storage = new CloudinaryStorage({
+  cloudinary,
+  params: {
+    folder: "experience",
+    resource_type: "raw" // important for PDF
   }
 })
 
@@ -15,11 +26,12 @@ const upload = multer({ storage })
 
 // ADD EXPERIENCE
 router.post("/", upload.single("certificate"), async (req, res) => {
+
   const newExp = new Experience({
     role: req.body.role,
     company: req.body.company,
     year: req.body.year,
-    certificate: req.file.filename
+    certificate: req.file.path   // ✅ Cloudinary URL
   })
 
   await newExp.save()
