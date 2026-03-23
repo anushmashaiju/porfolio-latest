@@ -3,15 +3,25 @@ const router = express.Router()
 const multer = require("multer")
 const CV = require("../models/CV")
 
-const BASE_URL = "https://porfolio-latest-1.onrender.com"
 
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, "uploads/cv")
-    },
-    filename: function (req, file, cb) {
-        cb(null, Date.now() + "-" + file.originalname)
-    }
+// ✅ ADD THIS
+const cloudinary = require("cloudinary").v2
+const { CloudinaryStorage } = require("multer-storage-cloudinary")
+
+// ✅ CONFIG CLOUDINARY
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.CLOUD_API_KEY,
+  api_secret: process.env.CLOUD_API_SECRET
+})
+
+// ✅ STORAGE (REPLACES diskStorage)
+const storage = new CloudinaryStorage({
+  cloudinary,
+  params: {
+    folder: "cv",
+    resource_type: "raw" // important for PDF
+  }
 })
 
 const upload = multer({ storage })
@@ -19,7 +29,7 @@ const upload = multer({ storage })
 // UPLOAD CV
 router.post("/", upload.single("cv"), async (req, res) => {
 
-    const fileUrl = BASE_URL + "/uploads/cv/" + req.file.filename
+    const fileUrl = req.file.path   // ✅ cloudinary URL
 
     await CV.deleteMany()
 
