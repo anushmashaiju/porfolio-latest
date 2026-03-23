@@ -8,13 +8,13 @@ const cvRoutes = require("./routes/cvRoutes")
 const miniProjectRoutes = require("./routes/miniProjectRoutes")
 const contactRoutes = require("./routes/contactRoutes")
 const experienceRoutes = require("./routes/experience")
+const path = require("path")
 const app = express()
 
 app.use(cors())
 app.use(express.json())
 
-app.use("/uploads", express.static("uploads"))
-
+app.use("/uploads", express.static(path.join(__dirname, "uploads")))
 mongoose.connect("mongodb+srv://anushmadevtech_db_user:xCCR1tJZRIGPVXxz@cluster0.sckmufu.mongodb.net/")
 .then(()=>{
   console.log("MongoDB Atlas Connected")
