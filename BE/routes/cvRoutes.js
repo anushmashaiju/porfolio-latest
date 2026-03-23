@@ -29,7 +29,10 @@ const upload = multer({ storage })
 // UPLOAD CV
 router.post("/", upload.single("cv"), async (req, res) => {
 
-    const fileUrl = req.file.path   // ✅ cloudinary URL
+    let fileUrl = req.file.path   // Cloudinary URL
+
+    // 🔥 Force download instead of open
+    fileUrl = fileUrl.replace("/upload/", "/upload/fl_attachment/")
 
     await CV.deleteMany()
 
